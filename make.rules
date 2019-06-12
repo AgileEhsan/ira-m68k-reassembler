@@ -1,0 +1,62 @@
+COMPILE	= $(CC) $(COPTS) $(CCOUT)$@ #$<
+DIR	= obj
+OBJS = $(DIR)/amiga_hunks$(OS).o $(DIR)/atari$(OS).o $(DIR)/binary$(OS).o \
+       $(DIR)/config$(OS).o $(DIR)/constants$(OS).o $(DIR)/elf$(OS).o \
+       $(DIR)/init$(OS).o $(DIR)/ira$(OS).o $(DIR)/ira_2$(OS).o \
+       $(DIR)/megadrive$(OS).o $(DIR)/opcode$(OS).o $(DIR)/supp$(OS).o
+
+all: ira$(OS)$(EXT)
+
+ira$(OS)$(EXT): $(OBJS)
+	$(LD) $(LDOUT)$@ $(OBJS) $(LDFLAGS)
+
+$(DIR)/amiga_hunks$(OS).o: amiga_hunks.c ira.h ira_2.h amiga_hunks.h constants.h supp.h
+	$(COMPILE) amiga_hunks.c
+	
+$(DIR)/atari$(OS).o: atari.c ira.h atari.h
+	$(COMPILE) atari.c
+
+$(DIR)/binary$(OS).o: binary.c ira.h ira_2.h amiga_hunks.h supp.h
+	$(COMPILE) binary.c
+
+$(DIR)/config$(OS).o: config.c ira.h config.h ira_2.h supp.h
+	$(COMPILE) config.c
+
+$(DIR)/constants$(OS).o: constants.c ira.h
+	$(COMPILE) constants.c
+
+$(DIR)/elf$(OS).o: elf.c ira.h elf.h
+	$(COMPILE) elf.c
+
+$(DIR)/init$(OS).o: init.c ira.h amiga_hunks.h atari.h binary.h elf.h init.h ira_2.h config.h constants.h supp.h
+	$(COMPILE) init.c
+
+$(DIR)/ira$(OS).o: ira.c ira.h amiga_hunks.h atari.h config.h constants.h elf.h init.h ira_2.h supp.h
+	$(COMPILE) ira.c
+
+$(DIR)/ira_2$(OS).o: ira_2.c ira.h amiga_hunks.h constants.h supp.h
+	$(COMPILE) ira_2.c
+
+$(DIR)/megadrive$(OS).o: megadrive.c megadrive.h
+	$(COMPILE) megadrive.c
+
+$(DIR)/opcode$(OS).o: opcode.c opcode.h
+	$(COMPILE) opcode.c
+
+$(DIR)/supp$(OS).o: supp.c ira.h
+	$(COMPILE) supp.c
+
+clean:
+	$(RM) ira$(OS)$(EXT) $(OBJS)
+
+FILES = ira_68k ira_mos ira_os4 ira.exe \
+        ira.readme ira.doc ira2.doc ira_config.doc \
+        amiga_hunks.c amiga_hunks.h atari.c atari.h binary.c binary.h \
+        config.c config.h constants.c constants.h elf.c elf.h init.c init.h \
+        ira.c ira.h ira_2.c ira_2.h megadrive.c megadrive.h opcode.c opcode.h \
+        supp.c supp.h \
+        make.rules Makefile Makefile.mos Makefile.os3 Makefile.os4 \
+        Makefile.osx Makefile.win32 obj/.dummy
+
+ira.lha: $(FILES)
+	lha -r a ira.lha $(FILES)

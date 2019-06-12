@@ -1,0 +1,12 @@
+OS	= _win32
+EXT	= .exe
+CC	= cl
+CCOUT	= /Fo
+COPTS	= /nologo /O2 /MT /Zp1 /c /D_POSIX_
+COPTS	= $(COPTS) /wd4996	# Disable warning regarding deprecated functions
+				# ("use strcpy_s instead of strcpy" etc)
+COPTS	= $(COPTS) $(WIN32_PLATFORMSDK_INCLUDE)
+LD	= link
+LDOUT	= /OUT:
+LDFLAGS	= /NOLOGO $(WIN32_PLATFORMSDK_LIB)
+include make.rules

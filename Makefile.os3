@@ -1,0 +1,9 @@
+OS	= _68k
+EXT	=
+CC	= vc +aos68k
+CCOUT	= -o 
+COPTS	= -c99 -c -O1 -dontwarn=214 -DAMIGAOS
+LD	= $(CC)
+LDOUT	= $(CCOUT)
+LDFLAGS	= -lamiga
+include make.rules

@@ -1,0 +1,9 @@
+OS	= _os4
+EXT	=
+CC	= vc +aosppc
+CCOUT	= -o 
+COPTS	= -c -O1 -dontwarn=214 -DAMIGAOS -D__USE_INLINE__
+LD	= $(CC)
+LDOUT	= $(CCOUT)
+LDFLAGS	= -lamiga
+include make.rules

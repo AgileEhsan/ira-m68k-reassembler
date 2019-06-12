@@ -1,0 +1,9 @@
+OS	= _mos
+EXT	=
+CC	= vc +morphos
+CCOUT	= -o 
+COPTS	= -c -O1 -dontwarn=214 -DAMIGAOS
+LD	= $(CC)
+LDOUT	= $(CCOUT)
+LDFLAGS	= -lamiga
+include make.rules
